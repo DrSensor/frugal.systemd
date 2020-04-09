@@ -1,0 +1,12 @@
+// Allow udisks2 to mount devices without authentication
+// for users in the "wheel" group.
+polkit.addRule(function(action, subject) {
+  if ( (action.id == "org.freedesktop.udisks2.filesystem-mount-system" ||
+        action.id == "org.freedesktop.udisks2.filesystem-mount") &&
+       (as("wheel") || as("sudo")) ) {
+    return polkit.Result.YES;
+  }
+
+  function as(group) { return subject.isInGroup(group); }
+});
+

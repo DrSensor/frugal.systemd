@@ -1,0 +1,16 @@
+[Unit]
+Description=hook to load vmlinuz-%i kernel upon kexec
+Documentation=man:kexec(8)
+DefaultDependencies=no
+Requires=sysinit.target
+After=sysinit.target
+PartOf=graphical.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/true
+RemainAterExit=yes
+ExecStop=/usr/bin/kexec -l /boot/vmlinuz-%i --initrd=/boot/initramfs-%i.img --reuse-cmdline
+
+[Install]
+WantedBy=basic.target

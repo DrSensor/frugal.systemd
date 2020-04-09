@@ -1,0 +1,14 @@
+polkit.addRule(function(action, subject) {
+  if (subject.active) {
+    if (action.id == "org.freedesktop.policykit.exec" &&
+        action.lookup("program") == "/usr/bin/kexec") {
+      return polkit.Result.YES;
+    } else if (action.id == "org.freedesktop.systemd1.manage-units") {
+      var verb = action.lookup("verb");
+      if ((verb == "start" && action.lookup("unit") == "kexec.target") ||
+	   verb == "kexec") {
+        return polkit.Result.YES;
+      }
+    }
+  }
+});

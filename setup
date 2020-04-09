@@ -1,0 +1,4 @@
+#!/bin/sh
+
+source ${0%/*}/mapping.sh
+source ${0%/*}/enable.sh

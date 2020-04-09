@@ -1,0 +1,15 @@
+[Unit]
+Description=Session Cache partition for hibernate
+Before=systemd-hibernate.service
+PartOf=hibernate.target systemd-hibernate-resume@.service
+DefaultDependencies=no
+StopWhenUnneeded=yes
+RefuseManualStart=yes
+RefuseManualStop=yes
+#Conflicts=systemd-swap.service
+
+[Swap]
+Priority=100
+
+[Install]
+RequiredBy=systemd-hibernate.service
